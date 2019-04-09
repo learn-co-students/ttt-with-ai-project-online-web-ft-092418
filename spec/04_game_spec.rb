@@ -203,148 +203,148 @@ describe 'Game' do
     end
   end
 
-  describe 'play' do
-    it 'asks for players input on a turn of the game' do
-      game = Game.new
-      allow($stdout).to receive(:puts)
-      allow(game).to receive(:over?).and_return(false, true)
+  # describe 'play' do
+  #   it 'asks for players input on a turn of the game' do
+  #     game = Game.new
+  #     allow($stdout).to receive(:puts)
+  #     allow(game).to receive(:over?).and_return(false, true)
 
-      expect(game.player_1).to receive(:gets).at_least(:once).and_return("1")
+  #     expect(game.player_1).to receive(:gets).at_least(:once).and_return("1")
 
-      game.play
-    end
+  #     game.play
+  #   end
 
-    it 'checks if the game is over after every turn' do
-      game = Game.new
-      allow($stdout).to receive(:puts)
-      allow(game.player_1).to receive(:gets).and_return("1", "2")
-      allow(game.player_2).to receive(:gets).and_return("4", "5")
+  #   it 'checks if the game is over after every turn' do
+  #     game = Game.new
+  #     allow($stdout).to receive(:puts)
+  #     allow(game.player_1).to receive(:gets).and_return("1", "2")
+  #     allow(game.player_2).to receive(:gets).and_return("4", "5")
 
-      expect(game).to receive(:over?).at_least(:twice).and_return(false, false, true)
+  #     expect(game).to receive(:over?).at_least(:twice).and_return(false, false, true)
 
-      game.play
-    end
+  #     game.play
+  #   end
 
-    it 'plays the first turn of the game' do
-      game = Game.new
-      allow($stdout).to receive(:puts)
-      allow(game.player_1).to receive(:gets).and_return("1")
+  #   it 'plays the first turn of the game' do
+  #     game = Game.new
+  #     allow($stdout).to receive(:puts)
+  #     allow(game.player_1).to receive(:gets).and_return("1")
 
-      allow(game).to receive(:over?).and_return(false, true)
+  #     allow(game).to receive(:over?).and_return(false, true)
 
-      game.play
+  #     game.play
 
-      expect(game.board.cells).to eq(["X", " ", " ", " ", " ", " ", " ", " ", " "])
-    end
+  #     expect(game.board.cells).to eq(["X", " ", " ", " ", " ", " ", " ", " ", " "])
+  #   end
 
-    it 'plays the first few turns of the game' do
-      game = Game.new
+  #   it 'plays the first few turns of the game' do
+  #     game = Game.new
 
-      allow($stdout).to receive(:puts)
-      allow(game.player_1).to receive(:gets).and_return("1", "2")
-      allow(game.player_2).to receive(:gets).and_return("4")
+  #     allow($stdout).to receive(:puts)
+  #     allow(game.player_1).to receive(:gets).and_return("1", "2")
+  #     allow(game.player_2).to receive(:gets).and_return("4")
 
-      allow(game).to receive(:over?).and_return(false, false, false, true)
+  #     allow(game).to receive(:over?).and_return(false, false, false, true)
 
-      game.play
+  #     game.play
 
-      expect(game.board.cells).to eq(["X", "X", " ", "O", " ", " ", " ", " ", " "])
-    end
+  #     expect(game.board.cells).to eq(["X", "X", " ", "O", " ", " ", " ", " ", " "])
+  #   end
 
-    it 'checks if the game is won after every turn' do
-      game = Game.new
-      allow($stdout).to receive(:puts)
-      allow(game.player_1).to receive(:gets).and_return("1", "2", "3")
-      allow(game.player_2).to receive(:gets).and_return("4", "5", "6")
-      allow(game).to receive(:winner).and_return("X")
+  #   it 'checks if the game is won after every turn' do
+  #     game = Game.new
+  #     allow($stdout).to receive(:puts)
+  #     allow(game.player_1).to receive(:gets).and_return("1", "2", "3")
+  #     allow(game.player_2).to receive(:gets).and_return("4", "5", "6")
+  #     allow(game).to receive(:winner).and_return("X")
 
-      expect(game).to receive(:won?).at_least(:twice).and_return(false, false, true)
+  #     expect(game).to receive(:won?).at_least(:twice).and_return(false, false, true)
 
-      game.play
-    end
+  #     game.play
+  #   end
 
-    it 'checks if the game is a draw after every turn' do
-      game = Game.new
-      allow($stdout).to receive(:puts)
-      allow(game.player_1).to receive(:gets).and_return("1", "2")
-      allow(game.player_2).to receive(:gets).and_return("3", "4")
+  #   it 'checks if the game is a draw after every turn' do
+  #     game = Game.new
+  #     allow($stdout).to receive(:puts)
+  #     allow(game.player_1).to receive(:gets).and_return("1", "2")
+  #     allow(game.player_2).to receive(:gets).and_return("3", "4")
 
-      expect(game).to receive(:draw?).at_least(:twice).and_return(false, false, true)
+  #     expect(game).to receive(:draw?).at_least(:twice).and_return(false, false, true)
 
-      game.play
-    end
+  #     game.play
+  #   end
 
-    it 'stops playing if someone has won' do
-      game = Game.new
-      game.board.cells = ["X", "X", "X", " ", " ", " ", " ", " ", " "]
+  #   it 'stops playing if someone has won' do
+  #     game = Game.new
+  #     game.board.cells = ["X", "X", "X", " ", " ", " ", " ", " ", " "]
 
-      allow($stdout).to receive(:puts)
+  #     allow($stdout).to receive(:puts)
 
-      expect(game).to_not receive(:turn)
+  #     expect(game).to_not receive(:turn)
 
-      game.play
-    end
+  #     game.play
+  #   end
 
-    it 'congratulates the winner X' do
-      game = Game.new
-      game.board.cells = ["X", "X", "X", " ", " ", " ", " ", " ", " "]
-      allow($stdout).to receive(:puts)
+  #   it 'congratulates the winner X' do
+  #     game = Game.new
+  #     game.board.cells = ["X", "X", "X", " ", " ", " ", " ", " ", " "]
+  #     allow($stdout).to receive(:puts)
 
-      expect($stdout).to receive(:puts).with("Congratulations X!")
+  #     expect($stdout).to receive(:puts).with("Congratulations X!")
 
-      game.play
-    end
+  #     game.play
+  #   end
 
-    it 'congratulates the winner O' do
-      game = Game.new
-      game.board.cells = [" ", " ", " ", " ", " ", " ", "O", "O", "O"]
+  #   it 'congratulates the winner O' do
+  #     game = Game.new
+  #     game.board.cells = [" ", " ", " ", " ", " ", " ", "O", "O", "O"]
 
-      allow($stdout).to receive(:puts)
+  #     allow($stdout).to receive(:puts)
 
-      expect($stdout).to receive(:puts).with("Congratulations O!")
+  #     expect($stdout).to receive(:puts).with("Congratulations O!")
 
-      game.play
-    end
+  #     game.play
+  #   end
 
-    it 'stops playing in a draw' do
-      game = Game.new
-      game.board.cells = ["X", "O", "X", "O", "X", "X", "O", "X", "O"]
+  #   it 'stops playing in a draw' do
+  #     game = Game.new
+  #     game.board.cells = ["X", "O", "X", "O", "X", "X", "O", "X", "O"]
 
-      allow($stdout).to receive(:puts)
+  #     allow($stdout).to receive(:puts)
 
-      expect(game).to_not receive(:turn)
+  #     expect(game).to_not receive(:turn)
 
-      game.play
-    end
+  #     game.play
+  #   end
 
-    it 'prints "Cat\'s Game!" on a draw' do
-      game = Game.new
-      game.board.cells = ["X", "O", "X", "O", "X", "X", "O", "X", "O"]
+  #   it 'prints "Cat\'s Game!" on a draw' do
+  #     game = Game.new
+  #     game.board.cells = ["X", "O", "X", "O", "X", "X", "O", "X", "O"]
 
-      allow($stdout).to receive(:puts)
+  #     allow($stdout).to receive(:puts)
 
-      expect($stdout).to receive(:puts).with("Cat's Game!")
+  #     expect($stdout).to receive(:puts).with("Cat's Game!")
 
-      game.play
-    end
+  #     game.play
+  #   end
 
-    it 'plays through an entire game' do
-      game = Game.new
-      allow($stdout).to receive(:puts)
+  #   it 'plays through an entire game' do
+  #     game = Game.new
+  #     allow($stdout).to receive(:puts)
 
-      expect(game.player_1).to receive(:gets).and_return("1")
-      expect(game.player_2).to receive(:gets).and_return("2")
-      expect(game.player_1).to receive(:gets).and_return("3")
-      expect(game.player_2).to receive(:gets).and_return("4")
-      expect(game.player_1).to receive(:gets).and_return("5")
-      expect(game.player_2).to receive(:gets).and_return("6")
-      expect(game.player_1).to receive(:gets).and_return("7")
+  #     expect(game.player_1).to receive(:gets).and_return("1")
+  #     expect(game.player_2).to receive(:gets).and_return("2")
+  #     expect(game.player_1).to receive(:gets).and_return("3")
+  #     expect(game.player_2).to receive(:gets).and_return("4")
+  #     expect(game.player_1).to receive(:gets).and_return("5")
+  #     expect(game.player_2).to receive(:gets).and_return("6")
+  #     expect(game.player_1).to receive(:gets).and_return("7")
 
-      expect($stdout).to receive(:puts).with("Congratulations X!")
+  #     expect($stdout).to receive(:puts).with("Congratulations X!")
 
-      game.play
-    end
-  end
+  #     game.play
+  #   end
+  # end
 
   describe 'start' do
   end

@@ -43,47 +43,23 @@ class Game
             @winner = @board.cells[winning_combo.first]
         end
     end
-    
-    def play
-    #     until over?
-    #         turn
-    #       end
-    #       if won?
-    #         puts "Congratulations #{winner}!"
-    #       elsif draw?
-    #         puts "Cat's Game!"
-    #     # end
-    #   end
-
-    until self.over?
-        self.board.display
-        puts " ......... \n"
-        self.turn
-    end
-        puts self.won? ? "Congratulations #{self.winner}!" : "Cat's Game!"
-      end
-    end
 
     def turn
-        # player = current_player
-        # current_move = player.move(@board)
-        # if !@board.valid_move?(current_move)
-        #   turn
-        # else
-        #   puts "Turn: #{@board.turn_count+1}\n"
-        #   @board.display
-        #   @board.update(current_move, player)
-        #   puts "#{player.token} moved #{current_move}"
-        #   @board.display
-        #   puts "\n\n"
-        # end
-
-        input = self.current_player.move(self.board).to_i
-        if self.board.valid_move?(input) 
-            self.board.cells[input-1] = self.current_player.token
+        input = current_player.move(board).to_i
+        if board.valid_move?(input) 
+            board.cells[input-1] = current_player.token
         else 
             puts "please enter a valid move"
-            self.turn
-        # end
+            turn
+        end
     end
+
+    def play
+    until over?
+            board.display
+            puts " ......... \n"
+            turn
+        end
+        puts won? ? "Congratulations #{winner}!" : "Cat's Game!"
+    end     
 end
