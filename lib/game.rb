@@ -43,10 +43,7 @@ class Game
             @winner = @board.cells[winning_combo.first]
         end
     end
-
-    def start
-    end
-
+    
     def play
     #     until over?
     #         turn
